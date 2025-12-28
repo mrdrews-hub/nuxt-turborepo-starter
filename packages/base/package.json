@@ -2,6 +2,9 @@
   "name": "@nuxt-turborepo/base",
   "type": "module",
   "private": true,
+  "exports": {
+    "./eslint.config.mjs": "./eslint.config.mjs"
+  },
   "scripts": {
     "build": "nuxt build",
     "generate": "nuxt generate",
@@ -9,6 +12,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@antfu/eslint-config": "^6.7.3",
     "@nuxt/eslint": "1.12.1",
     "@nuxt/fonts": "0.12.1",
     "@nuxt/hints": "1.0.0-alpha.4",
@@ -18,5 +22,8 @@
     "@unhead/vue": "^2.0.3",
     "eslint": "^9.0.0",
     "nuxt": "^4.2.2"
+  },
+  "devDependencies": {
+    "eslint-plugin-format": "^1.1.0"
   }
 }

@@ -1,6 +1,10 @@
 // @ts-check
-import withNuxt from './.nuxt/eslint.config.mjs'
+import { createBaseConfig } from '../../packages/base/eslint.config.mjs';
+import nuxt from './.nuxt/eslint.config.mjs';
 
-export default withNuxt(
-  // Your custom configs here
-)
+export default nuxt(
+  createBaseConfig({
+    // Add app-specific rules here if needed
+    // rules: {}
+  }),
+);
