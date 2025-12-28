@@ -2,7 +2,7 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { useToast } from 'primevue'
 import { Field, useForm } from 'vee-validate'
-import { z } from 'zod'
+import { LoginSchema } from '~/validations/auth/login.schema'
 
 definePageMeta({
   pageTransition: {
@@ -14,21 +14,12 @@ definePageMeta({
 const { fetch: refreshSession } = useUserSession()
 
 const toast = useToast()
-const LoginSchema
-  = z.object({
-    email: z.email(),
-    password: z.string(),
-    rememberMe: z.boolean(),
-  })
 
-const { handleSubmit, errors, defineField } = useForm({
+const { handleSubmit, errors } = useForm({
   validationSchema: toTypedSchema(LoginSchema),
-  initialValues: {
-    rememberMe: false,
-  },
 })
 const loading = ref(false)
-const handleLogin = handleSubmit(async (values, { resetForm }) => {
+const handleLogin = handleSubmit(async (values) => {
   try {
     loading.value = true
     await $fetch('/api/auth/login', {
@@ -38,7 +29,6 @@ const handleLogin = handleSubmit(async (values, { resetForm }) => {
     toast.add({
       summary: 'Login Success',
       severity: 'success',
-      life: 3000,
     })
     await refreshSession()
     await navigateTo('/')
@@ -50,7 +40,6 @@ const handleLogin = handleSubmit(async (values, { resetForm }) => {
       summary: 'Login Failed',
       detail: errorMessage,
       severity: 'error',
-      life: 5000,
     })
   }
   finally {
@@ -87,9 +76,7 @@ const handleLogin = handleSubmit(async (values, { resetForm }) => {
             <Password input-id="password" placeholder="Password" :toggle-mask="false" fluid :feedback="false" v-bind="field" />
           </FormFieldWrapper>
         </Field>
-        <Button type="submit" :loading="loading">
-          Log In
-        </Button>
+        <Button type="submit" label="Log In" :loading="loading" />
       </form>
       <p class="mt-8 text-center text-sm text-text-main dark:text-gray-400">
         Don't have an account?
