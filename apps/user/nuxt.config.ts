@@ -9,4 +9,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   app: AppConfig,
   compatibilityDate: '2025-07-15',
+  nitro: {
+    preset: 'bun',
+    node: false,
+  },
 })
